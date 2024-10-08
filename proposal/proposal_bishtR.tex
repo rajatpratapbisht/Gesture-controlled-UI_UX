@@ -1,0 +1,88 @@
+\documentclass{article}
+
+% if you need to pass options to natbib, use, e.g.:
+%     \PassOptionsToPackage{numbers, compress}{natbib}
+% before loading neurips_2020
+
+% ready for submission
+% \usepackage{neurips_2020}
+
+% to compile a preprint version, e.g., for submission to arXiv, add add the
+% [preprint] option:
+%     \usepackage[preprint]{neurips_2020}
+
+% to compile a camera-ready version, add the [final] option, e.g.:
+%     \usepackage[final]{neurips_2020}
+
+% to avoid loading the natbib package, add option nonatbib:
+\usepackage[final, nonatbib]{neurips_2020}
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+
+\title{Gesture Controlled UI/UX Navigation using Neural Networks}
+
+
+% The \author macro works with any number of authors. There are two commands
+% used to separate the names and addresses of multiple authors: \And and \AND.
+%
+% Using \And between authors leaves it to LaTeX to determine where to break the
+% lines. Using \AND forces a line break at that point. So, if LaTeX puts 3 of 4
+% authors names on the first line, and the last on the second line, try using
+% \AND instead of \And before the third author name.
+
+% Define the authors here
+\author{Rajat Bisht\\
+  Khoury College, Northeastern University \\
+  \texttt{bisht.r@northeastern.edu}
+}
+
+
+\begin{document}
+
+\maketitle
+
+
+\section{Overview}
+With emergence of new human computer interaction technologies in form of Virtual Reality(VR) and Augmented Reality(AR), hand gesture recognition using computer vision has gained significant importance. Hand gestures play a crucial role in navigation within these meta-realities, necessitating faster, seamless, and highly accurate mapping and classification of gestures. This project is (very loosely) based on sixth sense technology[1] developed by Pranav Mistry in association with MIT Media labs. Building upon the idea, this project proposes an effort in generating optimal hand-gesture recognition software using webcam for controlling mouse pointers using ‘Hand-Landmarks First’ approach for gesture recognition as a proof of concept expandable to AR/VR environments. 
+
+This project will take some inspiration from Google’s Mediapipe project for hand recognition[2] and add a hand gesture detection network for categorization of gestures for mapping with mouse pointer operations. The implementation process for hand detection from images will be divided into two stages: first, the localization and identification of the hand/palm region of interest (RoI), and second, the extraction and embedding of hand landmark information within the detected hand object. Based on the knowledge accumulated form survey paper by Kaur et.al [7] on object detection strategies and bottlenecks, the following strategy is proposed. Implementation of hand/palm detection will be done by using SSD[3] for extracting anchors, followed by a feature pyramid networks[4] for feature extraction and considering hard example dataset’s impact for a small objects like hand/palm as compared to soft example like wall/background [6], the project will lastly employ focal loss[5] for better generalization of learning over the trained deep learning network. Second step will be to pipeline extracted hand RoI to the landmarks detection neural net which will use convolutional neural network for determining landmarks and hand presence. Since, the scope of this project is to mimic mouse pointer actions, left or right handedness categorization of hand will be omitted as design choice, but can be incorporated as future work. Finally, a feed-forward neural net will be implemented in application layer for categorizing hand gestures and synchronizing with mouse pointer actions.
+
+\section{Datasets}
+For training, evaluation and testing of this project, datasets used can be classified as still images and video frames. Since learning curve and generality of learned knowledge in a deep neural net is highly contingent on incorporation of  both hard and soft examples while leaning heavily upon heavy examples[6], the dataset used are based on this knowledge rationale. Therefore, still image dataset can be further understood as soft examples using HaGRID dataset from Kaggle[8] and hard examples using hand database from CMU[9]. Video frame datasets are incorporated for training the application to learn movement tracking and swiping actions, for which Jester dataset[10] and gesture recognition dataset[11] will be used. Datasets will be cleaned and tailored to fit the specific scope of this application, aiming to optimize training time and improve performance.
+
+\section*{References}
+
+\small
+
+[1] Mistry, P.,\ \& Maes, P.\ (2009). SixthSense: a wearable gestural interface. In {\it ACM SIGGRAPH ASIA 2009 Art Gallery \& Emerging Technologies: Adaptation} (pp. 85-85).
+
+[2] Zhang, F., Bazarevsky, V., Vakunov, A., Tkachenka, A., Sung, G., Chang, C. L.,\  \& Grundmann, M. (2020). Mediapipe hands: On-device real-time hand tracking. {\it arXiv preprint arXiv:2006.10214}.
+
+[3] Liu, W., Anguelov, D., Erhan, D., Szegedy, C., Reed, S., Fu, C. Y.\, \& Berg, A. C. (2016). Ssd: Single shot multibox detector. In {\it Computer Vision–ECCV 2016: 14th European Conference, Amsterdam, The Netherlands, October 11–14, 2016, Proceedings, Part I 14} (pp. 21-37). Springer International Publishing.
+
+[4] Lin, T. Y., Dollár, P., Girshick, R., He, K., Hariharan, B.,\ \& Belongie, S. (2017). Feature pyramid networks for object detection. In {\it Proceedings of the IEEE conference on computer vision and pattern recognition} (pp. 2117-2125).
+
+[5] Ross, T. Y.,\ \& Dollár, G. K. H. P. (2017, July). Focal loss for dense object detection. In {\it proceedings of the IEEE conference on computer vision and pattern recognition} (pp. 2980-2988).
+
+[6] Kishida, I.,\ \& Nakayama, H. (2019). Empirical study of easy and hard examples in cnn training. In {\it Neural Information Processing: 26th International Conference, ICONIP 2019, Sydney, NSW, Australia, December 12–15, 2019, Proceedings, Part IV 26 }(pp. 179-188). Springer International Publishing.
+
+[7] Kaur, R.,\ \& Singh, S. (2023). A comprehensive review of object detection with deep learning. {\it Digital Signal Processing, 132,} 103812. 
+
+[8] Alexander Kapitanov, Andrey Makhliarchuk, Karina Kvanchiani,\ \& Aleksandr Nagaev. {\it HaGRID - HAnd Gesture Recognition Image Dataset.} (n.d.). Www.kaggle.com. \begin{center}\url{https://www.kaggle.com/datasets/kapitanov/hagrid/data}\end{center}
+
+[9] {\it Hand Database - CMU Panoptic Dataset}. (2017). Cmu.edu. \begin{center}\url{http://domedb.perception.cs.cmu.edu/handdb.html}\end{center}
+
+[10] {\it Papers with Code - Jester (Gesture Recognition) Dataset}.\ (2022).\ Paperswithcode.com. \begin{center}\url{https://paperswithcode.com/dataset/jester-gesture-recognition}\end{center}
+
+[11] Venkata, A. (2024). {\it Gesture Recognition Dataset}. Kaggle.com. 
+\begin{center}
+    \url{https://www.kaggle.com/datasets/abhishek14398/gesture-recognition-dataset/data}
+\end{center}
+
+\end{document}
