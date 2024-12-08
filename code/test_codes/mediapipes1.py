@@ -1,5 +1,13 @@
 import cv2
 import mediapipe as mp
+import pyautogui
+
+from pynput.mouse import Button, Controller
+
+mouse  = Controller()
+
+# Screen dimensions
+screen_width, screen_height = pyautogui.size()
 
 # MEDIAPIPE
 ###################################################
@@ -18,6 +26,21 @@ cam_height = 600
 cap = cv2.VideoCapture(0)
 cap.set(3, cam_width )
 cap.set(4, cam_height)
+
+# util functions:
+def find_finger_tip(hand_landmarks):
+    if hand_landmarks:
+        return hand_landmarks.landmark[mp_hands.HandLandmark.INDEX_FINGER_TIP]
+    else :
+        return None
+
+def move_mouse(index_tip):
+    if index_tip is not None:
+        x = int(index_tip.x * screen_width)
+        y = int(index_tip.y * screen_height)
+        
+        pyautogui.moveTo(x, y)
+        
 
 # MAIN LOOP 
 ###################################################
@@ -79,9 +102,16 @@ with mp_hands.Hands(
                     hand_label = results.multi_handedness[idx].classification[0].label
                     if hand_label == "Right":
                         print(f"Right hand Landmarks:")
-                        for i, lm in enumerate(hand_landmarks.landmark):
-                            print(f"Landmark{i}: x={lm.x:.3f}, y={lm.y:.3f}, z={lm.z:0.3f}")
-                            
+                        # for i, lm in enumerate(hand_landmarks.landmark):
+                        #     print(f"Landmark{i}: x={lm.x:.3f}, y={lm.y:.3f}, z={lm.z:0.3f}")
+                        index_tip = find_finger_tip(hand_landmarks) 
+                        print(index_tip)
+                        move_mouse(index_tip)
+                        
+                        if cv2.waitKey(1) & 0xFF == ord('c'):
+                            mouse.press(Button.left)
+                            mouse.release(Button.left)
+                        
                 # draw landmark one by one
                 mp_drawing.draw_landmarks(frame, hand_landmarks, mp_hands.HAND_CONNECTIONS)
 
