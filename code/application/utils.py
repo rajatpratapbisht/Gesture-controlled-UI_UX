@@ -36,7 +36,7 @@ finger_labels ={
 }
 
 action_labels = {
-    0: "not_a_gesture",                    # nothing_detected
+    0: "S",                    # nothing_detected
     1: "track_mouse_pointer",           # index_finger_up
     2: "execute_left_click",            # index_and_thumb_up
     3: "execute_double_click",          # index_and_middle_spaced
