@@ -115,7 +115,7 @@ while cap.isOpened():
                                     text=f'{action_labels[predicted_class]}',
                                     fontFace=cv2.FONT_HERSHEY_PLAIN,
                                     fontScale= 2,
-                                    org = (150, 50,),
+                                    org = (150, cam_height-100,),
                                     color=(0, 255, 0), 
                                     thickness=2)
                         mouse_op(predicted_class, hand_landmarks)
@@ -136,7 +136,7 @@ while cap.isOpened():
                 color=(255, 0, 0), 
                 thickness=3)
     # Show the frame
-    cv2.imshow("MediaPipe Hands", frame)
+    cv2.imshow("Gesture Recognition Engine", frame)
     # wait for a milisec and check if 'q' is pressed
     if cv2.waitKey(1) & 0xFF == ord('q'):           
         break
